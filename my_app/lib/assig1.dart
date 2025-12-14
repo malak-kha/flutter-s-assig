@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         backgroundColor: Colors.white,
         body: Center(
           child: Container(
-            color: Colors.lightBlue[200],
+            color: Colors.white,
             padding: EdgeInsets.all(16),
             width: 350,
             child: Column(
@@ -27,9 +27,9 @@ class MyApp extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    ColoredButton(text: "A", color: Colors.red),
-                    ColoredButton(text: "B", color: Colors.orange),
-                    ColoredButton(text: "C", color: Colors.yellow[700]!),
+                    ImageButton(text: "A", image: "assets/img1.png"),
+                    ImageButton(text: "B", image: "assets/img2.png"),
+                    ImageButton(text: "C", image: "assets/img1.png"),
                   ],
                 ),
                 SizedBox(height: 20),
@@ -37,7 +37,6 @@ class MyApp extends StatelessWidget {
                 // Fancy Section
                 Container(
                   width: double.infinity,
-                  color: Colors.blue[100],
                   padding: EdgeInsets.symmetric(vertical: 16, horizontal: 8),
                   child: Column(
                     children: [
@@ -50,23 +49,21 @@ class MyApp extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: 16),
-
-                      // 2 rows of numbers 1 2 3 and 4 5 6 with different purple shades
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          NumberBox(number: "1", color: Colors.purple[700]!),
-                          NumberBox(number: "2", color: Colors.purple),
-                          NumberBox(number: "3", color: Colors.purple[300]!),
+                          ImageNumberBox(number: "1", image: "assets/img2.png"),
+                          ImageNumberBox(number: "2", image: "assets/img1.png"),
+                          ImageNumberBox(number: "3", image: "assets/img2.png"),
                         ],
                       ),
                       SizedBox(height: 10),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          NumberBox(number: "4", color: Colors.purple[400]!),
-                          NumberBox(number: "5", color: Colors.purple[200]!),
-                          NumberBox(number: "6", color: Colors.pink[200]!),
+                          ImageNumberBox(number: "4", image: "assets/1.png"),
+                          ImageNumberBox(number: "5", image: "assets/2.png"),
+                          ImageNumberBox(number: "6", image: "assets/3.png"),
                         ],
                       ),
                     ],
@@ -90,9 +87,9 @@ class MyApp extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        InfoCard(number: "23", text: "Active", color: const Color.fromARGB(255, 0, 0, 0)),
-                        InfoCard(number: "15", text: "Pending", color: Color.fromARGB(255, 10, 10, 9)),
-                        InfoCard(number: "7", text: "Completed", color: const Color.fromARGB(255, 5, 6, 5)),
+                        ImageInfoCard(number: "23", text: "Active", image: "assets/img1.png"),
+                        ImageInfoCard(number: "15", text: "Pending", image: "assets/img1.png"),
+                        ImageInfoCard(number: "7", text: "Completed", image: "assets/img1.png"),
                       ],
                     ),
                   ],
@@ -106,87 +103,108 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class ColoredButton extends StatelessWidget {
+// Button with image background
+class ImageButton extends StatelessWidget {
   final String text;
-  final Color color;
+  final String image;
 
-  ColoredButton({required this.text, required this.color});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-      color: color,
-      child: Text(
-        text,
-        style: TextStyle(
-          color: contrastTextColor(color),
-          fontWeight: FontWeight.bold,
-          fontSize: 20,
-        ),
-      ),
-    );
-  }
-}
-
-class NumberBox extends StatelessWidget {
-  final String number;
-  final Color color;
-
-  NumberBox({required this.number, required this.color});
+  ImageButton({required this.text, required this.image});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 50,
-      width: 50,
-      color: color,
+    return Stack(
       alignment: Alignment.center,
-      child: Text(
-        number,
-        style: TextStyle(
-          color: contrastTextColor(color),
-          fontWeight: FontWeight.bold,
-          fontSize: 22,
+      children: [
+        Image.asset(
+          image,
+          width: 70,
+          height: 50,
+          fit: BoxFit.cover,
         ),
-      ),
+        Text(
+          text,
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+        ),
+      ],
     );
   }
 }
 
-class InfoCard extends StatelessWidget {
+// Number box with image background
+class ImageNumberBox extends StatelessWidget {
   final String number;
-  final String text;
-  final Color color;
+  final String image;
 
-  InfoCard({required this.number, required this.text, required this.color});
+  ImageNumberBox({required this.number, required this.image});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 90,
-      padding: EdgeInsets.all(12),
-      color: Colors.white,
-      child: Column(
-        children: [
-          Text(
-            number,
-            style: TextStyle(
-              fontSize: 26,
-              fontWeight: FontWeight.bold,
-              color: color.computeLuminance() > 0.5 ? Colors.black : color,
-            ),
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        Image.asset(
+          image,
+          width: 50,
+          height: 50,
+          fit: BoxFit.cover,
+        ),
+        Text(
+          number,
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 22,
           ),
-          SizedBox(height: 6),
-          Text(
-            text,
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.black87,
+        ),
+      ],
+    );
+  }
+}
+
+// Info card with image background
+class ImageInfoCard extends StatelessWidget {
+  final String number;
+  final String text;
+  final String image;
+
+  ImageInfoCard({required this.number, required this.text, required this.image});
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        Image.asset(
+          image,
+          width: 90,
+          height: 90,
+          fit: BoxFit.cover,
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              number,
+              style: TextStyle(
+                fontSize: 26,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
             ),
-          ),
-        ],
-      ),
+            Text(
+              text,
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.white,
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

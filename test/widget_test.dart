@@ -1,30 +1,18 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:my_app/flutter-s-assig/main.dart';
+// تأكدي أن الاسم هنا يطابق اسم المشروع في pubspec.yaml
+import 'package:zahraawa/main.dart';
+
+import '../my_app/lap-flutter/main.dart'; 
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('Animal Sounds App smoke test', (WidgetTester tester) async {
+    // نقوم بتشغيل التطبيق باستخدام الاسم الجديد للكلاس
+    await tester.pumpWidget(const AnimalSoundsApp());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // بما أن تطبيقك الآن هو "Animal Sounds" وليس تطبيق العداد (Counter)
+    // سنقوم بالتحقق من وجود نص "Animals Sounds" الذي يظهر في الشاشة
+    expect(find.text('Animals Sounds'), findsOneWidget);
   });
 }
